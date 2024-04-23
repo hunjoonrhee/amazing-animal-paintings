@@ -9,6 +9,8 @@ import { MatInput } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { filter } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CartService } from '../../cart/cart.service';
 
 @Component({
   selector: 'app-product-list',
@@ -35,10 +37,10 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
   filteredProducts: Product[] = [];
   sortOrder: string = '';
-  pageSize: number = 5;
-  productsPerPage: Product[] = [];
+  pageSize: number = 6;
+  private snackbar = inject(MatSnackBar);
   private productService = inject(ProductService);
-  private cdr = inject(ChangeDetectorRef);
+  private cartService = inject(CartService);
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(data => {
@@ -79,6 +81,18 @@ export class ProductListComponent implements OnInit {
     } else {
       this.filteredProducts = this.products.slice(0, this.pageSize);
     }
+  }
+
+  addProductToCart(product: Product) {
+    this.cartService.addProductToCart(product).subscribe({
+      next: () => {
+        this.snackbar.open('Product added to cart!', '', {
+          duration: 2000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+        });
+      },
+    });
   }
 
   protected readonly filter = filter;

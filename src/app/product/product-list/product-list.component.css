@@ -14,3 +14,14 @@ mat-card {
 .sort-dropdown {
     margin-left: 20px;
 }
+
+.pagination {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.search-sort-bar {
+    margin-top: 20px;
+    margin-bottom: 20px
+}
