@@ -10,14 +10,7 @@ import { MatButton } from '@angular/material/button';
 @Component({
   selector: 'app-cart-view',
   standalone: true,
-  imports: [
-    NgForOf,
-    MatCard,
-    MatList,
-    MatListItem,
-    CurrencyPipe,
-    MatButton,
-  ],
+  imports: [NgForOf, MatCard, MatList, MatListItem, CurrencyPipe, MatButton],
   templateUrl: './cart-view.component.html',
   styleUrl: './cart-view.component.css',
 })
@@ -27,12 +20,11 @@ export class CartViewComponent implements OnInit {
   private snackbar = inject(MatSnackBar);
   private cartService = inject(CartService);
 
-
   ngOnInit(): void {
-    this.cartService.getCartItems().subscribe((data)=> {
+    this.cartService.getCartItems().subscribe(data => {
       this.cartItems = data;
       this.totalPrice = this.getTotalPrice();
-    })
+    });
   }
 
   clearCart() {
@@ -64,9 +56,6 @@ export class CartViewComponent implements OnInit {
           verticalPosition: 'top',
         });
       },
-    })
+    });
   }
-
-
-
 }
